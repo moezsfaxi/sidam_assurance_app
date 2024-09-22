@@ -5,6 +5,9 @@ import 'package:sidam_assurance_app/form_components/date_picker_for_the_form.dar
 import 'package:sidam_assurance_app/form_components/descriptions_text_form.dart';
 import 'package:sidam_assurance_app/form_components/form_labels.dart';
 import 'package:sidam_assurance_app/form_components/numberfields.dart';
+import 'package:dio/dio.dart';
+import 'package:sidam_assurance_app/network_controllers/assurance_voyage_controller.dart';
+import 'package:sidam_assurance_app/polices_forms/form_sent_success.dart';
 
 class AssuranceVoyage extends StatefulWidget {
   const AssuranceVoyage({super.key});
@@ -22,19 +25,18 @@ class _AssuranceVoyageState extends State<AssuranceVoyage> {
   String? _Numerodepasseport;
   String? _Destinationduvoyage;
   String? _Motifduvoyage;
-  //for the numbers
   String? _telephone;
   String? _whatsapp;
   String? _Dureeduvoyage;
-  //for desc
   String? _Conditionsmedicales;
- 
- 
-
-
   DateTime? _selectedDateforDepart;
   DateTime? _selectedDateforretour;
   DateTime? _selectedDateforbd;
+ 
+ 
+
+
+
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _retourController = TextEditingController();
   final TextEditingController _bdController = TextEditingController();
@@ -43,11 +45,65 @@ class _AssuranceVoyageState extends State<AssuranceVoyage> {
                if(value!.isEmpty){
                 return "please enter some text";
       
-               } else if(value != "admin"){
-                return "wrong name";
                }
                return null;
             }
+            
+  //begin
+  bool _isLoading = false;
+Future<void> _sendtheform() async {
+  if (_formKey.currentState!.validate()) {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      Response response = await send_assurance_voyage(
+        nom_voyageur: _Nomduvoyageur,
+        email: _email,
+        adresse: _adresse,
+        num_pass: _Numerodepasseport,
+        destination: _Destinationduvoyage,
+        motif_voyage: _Motifduvoyage,
+        tel: _telephone,
+        wtsp: _whatsapp,
+        duree_voyage: _Dureeduvoyage,
+        condition_medical: _Conditionsmedicales,
+        date_depart: _selectedDateforDepart,
+        date_retour: _selectedDateforretour,
+        date_naissance: _selectedDateforbd,
+        created_at: DateTime.now().toIso8601String(),
+      );
+
+      switch (response.statusCode) {
+        case 201:
+          if (mounted) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const FormSentSuccess()),
+              (Route<dynamic> route) => false,
+            );
+          }
+          break;
+        case 404:
+        case 401:
+          print(response.data);
+          break;
+        default:
+          print("Unexpected status code: ${response.statusCode}");
+          break;
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+}
+
+
+
+  //end
   
   @override
   Widget build(BuildContext context) {
@@ -182,12 +238,18 @@ class _AssuranceVoyageState extends State<AssuranceVoyage> {
                       ),
                       onPressed: (){
                       if(_formKey.currentState!.validate()){
-                        // ignore: avoid_print
-                        print("submitted");
+                        _formKey.currentState!.save();
+                        _sendtheform();
                       }
               
                     },
-                     child:const Text("submit") ),
+                     child:_isLoading ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3.0,
+                              value: 0.7,) 
+                              : const Text("evoyé la demane",
+                              style: TextStyle(fontFamily: "Roboto-Medium"),
+                              ) ),
                   )
              
                   

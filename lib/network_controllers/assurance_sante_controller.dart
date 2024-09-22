@@ -1,175 +1,51 @@
-
-
 // ignore_for_file: avoid_print
-
 import 'package:dio/dio.dart';
+Future<Response> send_assurance_sante(
+  {
+    required type_client,
+    required prenom,
+    required tel,
+    required wtsp,
+    required email,
+    required nom_beneficiaire,
+    required date_naissance,
+    required num_securite_social,
+    required adresse,
+    required type_couvert,
+    required created_at,
+    required activ_couvert        }
+) async {
+  final dio = Dio();
+  Response response;
+  dio.options.headers['Content-Type'] = 'application/json';
 
-
-Future<void> submitForm({
-  required String email,
-  required String adresse,
-  required String nomPrenom,
-  required String nomDuBeneficiaire,
-  required String telephone,
-  required String whatsapp,
-  required String numeroDeSecuriteSociale,
-  required String selectedValueForTypedeClient,
-  required String selectedValueForTypedecouverture,
-  required DateTime? selectedDate,
-}) async {
-   Dio dio = Dio();
-   setupDio(dio);
   try {
-    Response response = await dio.get(
-      'http://192.168.43.153:8000/sante', 
+    response = await dio.post(
+      'http://192.168.1.8:8000/api/assurance-sante',
       data: {
-        'email': email,
-        'adresse': adresse,
-        'nomPrenom': nomPrenom,
-        'nomDuBeneficiaire': nomDuBeneficiaire,
-        'telephone': telephone,
-        'whatsapp': whatsapp,
-        'numeroDeSecuriteSociale': numeroDeSecuriteSociale,
-        'typeDeClient': selectedValueForTypedeClient,
-        'typeDeCouverture': selectedValueForTypedecouverture,
-        'dateDeNaissance': selectedDate?.toIso8601String(), // Format the date as needed
-      },
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      print('Submission successful!');
-      print('Response data: ${response.data}');
-      // Handle successful submission
-    } else {
-      print('Submission failed: ${response.data}');
-      // Handle failed submission
-    }
-  } on DioException catch (e) {
-    print('DioException Error: ${e.message}');
-    if (e.response != null) {
-      print('Status code: ${e.response?.statusCode}');
-      print('Response data: ${e.response?.data}');
-    } else {
-      print('Network error: ${e.message}');
-    }
-  } catch (e) {
-    print('Unexpected error: $e');
-  }
-}
-
-void setupDio(Dio dio) {
-  dio.interceptors.add(LogInterceptor(
-    responseBody: true,
-    requestBody: true,
-    request: true,
-    error: true,
-  ));
-}
-
-Future<void> submitFormtwo({
-  required String email,
-  required String adresse,
-  required String nomPrenom,
-  required String nomDuBeneficiaire,
-  required String telephone,
-  required String whatsapp,
-  required String numeroDeSecuriteSociale,
-  required String selectedValueForTypedeClient,
-  required String selectedValueForTypedecouverture,
-  required DateTime? selectedDate,
-}) async {
-  Dio dio = Dio();
-  setupDio(dio);
   
-  try {
-    Response response = await dio.get(
-      'http://192.168.43.153:8000/santetwo',
-      queryParameters: {
-        'email': email,
-        'adresse': adresse,
-        'nomPrenom': nomPrenom,
-        'nomDuBeneficiaire': nomDuBeneficiaire,
-        'telephone': telephone,
-        'whatsapp': whatsapp,
-        'numeroDeSecuriteSociale': numeroDeSecuriteSociale,
-        'typeDeClient': selectedValueForTypedeClient,
-        'typeDeCouverture': selectedValueForTypedecouverture,
-        'dateDeNaissance': selectedDate?.toIso8601String(), // Format the date as needed
-      },
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      ),
+  "type_client": type_client,
+  "prenom": prenom,
+  "tel": tel,
+  "wtsp": wtsp,
+  "email": email,
+  "nom_beneficiaire": nom_beneficiaire,
+  "date_naissance": date_naissance,
+  "num_securite_social": num_securite_social,
+  "adresse": adresse,
+  "type_couvert": type_couvert,
+  "created_at": created_at,
+  "activ_couvert": activ_couvert
+},
     );
-
-    if (response.statusCode == 200) {
-      print('Submission successful!');
-      print('Response data: ${response.data}');
-      // Handle successful submission
-    } else {
-      print('Submission failed: ${response.data}');
-      // Handle failed submission
-    }
-  } on DioException catch (e) {
-    print('DioException Error: ${e.message}');
-    if (e.response != null) {
-      print('Status code: ${e.response?.statusCode}');
-      print('Response data: ${e.response?.data}');
-    } else {
-      print('Network error: ${e.message}');
-    }
-  } catch (e) {
-    print('Unexpected error: $e');
-  }
-}
-
-
-/////
-
-///
-
-
-Future<Response> loginuservalidation(String email, String telephone ) async {
-  Dio dio = Dio();
-
-  try {
-    Response response = await dio.get(
-     // 'http://127.0.0.1:8000/signin',  // Ensure http:// or https:// is included
-      'http://192.168.43.153:8000/santetwo',
-      data:{
-
-        'email': email,
-        'tel': telephone,
-      } 
-      ,
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      ),
-    );
-    //print(response.data);
+    
     return response;
-    
-   
-    
-
-
   } on DioException catch (e) {
   // Print full error details for debugging
- 
   print('Error: ${e.response?.statusCode} - ${e.message}');
-  if (e.response != null) {
-    
+  if (e.response != null) {    
     print('Response data: ${e.response?.data}');
   }
-  
   print('Request data: ${e.requestOptions.data}');
   rethrow;
 }

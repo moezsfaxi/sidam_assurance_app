@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sidam_assurance_app/polices_forms/assurance_agricole.dart';
+import 'package:sidam_assurance_app/polices_forms/assurance_sante.dart';
 import 'package:sidam_assurance_app/testingforms/first_page.dart';
 
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home:  const Scaffold(
       
-        body:  FirstPage() ,
+        body:   AssuranceAgricole() ,
 
       ) ,
     );
@@ -48,7 +50,7 @@ class Testing extends StatelessWidget {
       ),
       home: const Scaffold(
         //appBar: AppBarwidget(isHome: true),
-        body: FirstPage()  ,
+        body: AssuranceSante()  ,
     ));
   }
 }

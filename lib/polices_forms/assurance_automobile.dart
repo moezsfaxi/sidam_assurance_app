@@ -5,6 +5,9 @@ import 'package:sidam_assurance_app/form_components/date_picker_for_the_form.dar
 import 'package:sidam_assurance_app/form_components/drop_down_menu_form.dart';
 import 'package:sidam_assurance_app/form_components/form_labels.dart';
 import 'package:sidam_assurance_app/form_components/numberfields.dart';
+import 'package:dio/dio.dart';
+import 'package:sidam_assurance_app/network_controllers/assurance_auto_controller.dart';
+import 'package:sidam_assurance_app/polices_forms/form_sent_success.dart';
 
 class AssuranceAutomobile extends StatefulWidget {
   const AssuranceAutomobile({super.key});
@@ -39,13 +42,79 @@ class _AssuranceAutomobileState extends State<AssuranceAutomobile> {
                if(value!.isEmpty){
                 return "please enter some text";
       
-               } else if(value != "admin"){
-                return "wrong name";
-               }
+               } 
                return null;
             }
 
- 
+
+    
+    //begin
+    bool _isLoading = false;
+
+  Future<void> _sendtheformauto() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+
+      try {
+       Response response = await send_assurance_auto(
+        email: _Email,
+        adresse: _Adresse,
+        tel: _telephone,
+        wtsp: _WhatsApp,       
+        type_client: _selectedVlaueForTypedeClient,
+        immatriculation: _Immatriculation,
+        marque: _Marque,
+        modele: _Modele,
+        type_de_carburant: _selectedVlaueForTypedeCarburant,
+        date_de_premiere_mise_en_circulation: _selectedDate!.toIso8601String(),
+        type_de_vehicule: _selectedVlaueForTypedevehicule,
+        valeur_a_neuf: _Valeuraneuf,
+        valeur_venale: _Valeurvenale,
+        activ_couvert: "inactive",
+        created_at:  DateTime.now().toIso8601String(),
+       
+       
+    
+
+        );
+       
+        switch (response.statusCode) {
+      case 201:
+        if(mounted){
+
+         Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(builder: (context) => const FormSentSuccess()),
+    (Route<dynamic> route) => false, // This removes all previous routes
+  ); 
+        }
+        break;
+      case 404:
+        print(response.data);
+        break;
+      case 401:
+        print(response.data);
+        break;
+      default:
+        print("Unexpected status code: ${response.statusCode}");
+        break;
+    }
+      } on DioException catch (e) {
+
+        print(e.error);
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+
+
+   //end  
  
  
   @override
@@ -173,9 +242,10 @@ class _AssuranceAutomobileState extends State<AssuranceAutomobile> {
                       child: ElevatedButton(onPressed: (){
                         // ignore: avoid_print
                         if(_formKey.currentState!.validate()){
-                        
-                        // ignore: avoid_print
-                        print("submitting");
+                          _formKey.currentState!.save();
+                          _sendtheformauto();
+
+                      
               
                         }
               
@@ -186,7 +256,13 @@ class _AssuranceAutomobileState extends State<AssuranceAutomobile> {
             
             
                       ),
-                       child:const Text("submit")
+                       child:_isLoading ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3.0,
+                              value: 0.7,) 
+                              : const Text("evoyé la demane",
+                              style: TextStyle(fontFamily: "Roboto-Medium"),
+                              )
                        ),      
               
               

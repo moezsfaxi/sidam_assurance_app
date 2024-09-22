@@ -5,6 +5,9 @@ import 'package:sidam_assurance_app/form_components/descriptions_text_form.dart'
 import 'package:sidam_assurance_app/form_components/drop_down_menu_form.dart';
 import 'package:sidam_assurance_app/form_components/form_labels.dart';
 import 'package:sidam_assurance_app/form_components/numberfields.dart';
+import 'package:dio/dio.dart';
+import 'package:sidam_assurance_app/network_controllers/assurance_professionnelle_controller.dart';
+import 'package:sidam_assurance_app/polices_forms/form_sent_success.dart';
 
 class AssuranceProfessionnelle extends StatefulWidget {
   const AssuranceProfessionnelle({super.key});
@@ -21,14 +24,12 @@ class _AssuranceProfessionnelleState extends State<AssuranceProfessionnelle> {
   String? _Adresse;
   String? _email;
   String? _Nomduresponsable;
-  //for the numbers
   String? _SIRET_SIREN;
   String? _telephone;
   String? _whatsapp;
   String? _Nombredemployes;
   String? _Chiffredaffairesannuel;
   String? _Valeurdesbiensassures;
-  //for desc
   String? _Descriptiondeslocaux;
   	
   
@@ -38,11 +39,64 @@ class _AssuranceProfessionnelleState extends State<AssuranceProfessionnelle> {
                if(value!.isEmpty){
                 return "please enter some text";
       
-               } else if(value != "admin"){
-                return "wrong name";
-               }
+               } 
                return null;
             }
+   //begin
+   bool _isLoading = false;
+   Future<void> _sendtheform() async {
+  if (_formKey.currentState!.validate()) {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      Response response = await send_assurance_professionnelle(
+        nom_entreprise: _Nomdelentreprise,
+        type_activite: _Typedactivite,
+        adresse: _Adresse,
+        email: _email,
+        nom_resp: _Nomduresponsable,
+        SIRET_SIREN: _SIRET_SIREN,
+        tel: _telephone,
+        wtsp: _whatsapp,
+        nbr_emp: _Nombredemployes,
+        chiffre_aff_annuel: _Chiffredaffairesannuel,
+        valeur_biens_assures: _Valeurdesbiensassures,
+        description_locaux: _Descriptiondeslocaux,
+        created_at: DateTime.now().toIso8601String(),
+        activ_couvert: "inactive",
+      );
+
+      switch (response.statusCode) {
+        case 201:
+          if (mounted) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const FormSentSuccess()),
+              (Route<dynamic> route) => false,
+            );
+          }
+          break;
+        case 404:
+        case 401:
+          print(response.data);
+          break;
+        default:
+          print("Unexpected status code: ${response.statusCode}");
+          break;
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+}
+
+   
+   
+   //end         
 
   @override
   Widget build(BuildContext context) {
@@ -166,8 +220,8 @@ class _AssuranceProfessionnelleState extends State<AssuranceProfessionnelle> {
                         // ignore: avoid_print
                         if(_formKey.currentState!.validate()){
                         
-                        // ignore: avoid_print
-                        print("submitting");
+                       _formKey.currentState!.save();
+                       _sendtheform();
               
                         }
               
@@ -176,7 +230,13 @@ class _AssuranceProfessionnelleState extends State<AssuranceProfessionnelle> {
                          foregroundColor: Colors.white,
                          backgroundColor: Colors.blue       
                       ),
-                       child:const Text("submit")
+                       child:_isLoading ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3.0,
+                              value: 0.7,) 
+                              : const Text("evoyé la demane",
+                              style: TextStyle(fontFamily: "Roboto-Medium"),
+                              )
                        ),      
                       )
             ],

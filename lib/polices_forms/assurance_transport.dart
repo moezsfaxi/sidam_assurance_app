@@ -4,6 +4,9 @@ import 'package:sidam_assurance_app/form_components/customizedtextformfield.dart
 import 'package:sidam_assurance_app/form_components/date_picker_for_the_form.dart';
 import 'package:sidam_assurance_app/form_components/form_labels.dart';
 import 'package:sidam_assurance_app/form_components/numberfields.dart';
+import 'package:dio/dio.dart';
+import 'package:sidam_assurance_app/network_controllers/assurance_tronsport_controller.dart';
+import 'package:sidam_assurance_app/polices_forms/form_sent_success.dart';
 
 class AssuranceTransport extends StatefulWidget {
   const AssuranceTransport({super.key});
@@ -22,28 +25,71 @@ class _AssuranceTransportState extends State<AssuranceTransport> {
   String? _Modedetransport;
   String? _Dureeestimeedutransport;
   String? _Typedetransport;
-
-  //for the numbers
   String? _telephone;
   String? _whatsapp;
   String? _SIRET_SIREN;
- 
-  
-
   DateTime? _selectedDebutDeTransoprt ;
+
   final TextEditingController _debutController= TextEditingController();
   String? myvalidation(String? value){
                if(value!.isEmpty){
                 return "please enter some text";
       
-               } else if(value != "admin"){
-                return "wrong name";
-               }
+               } 
                return null;
             }
 
 
-  
+  //begin
+  bool _isLoading = false;
+  Future<void> _sendtheform() async {
+  if (_formKey.currentState!.validate()) {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      Response response = await send_assurance_transport(
+        nom_entreprise_transp: _Nomdelentreprisedetransport,
+        type_transport: _Typedetransport,
+        adresse: _adress,
+        email: _email,
+        SIRET_SIREN: _SIRET_SIREN,
+        nature_marchandises: _Naturedesmarchandises,
+        tel: _telephone,
+        wtsp: _whatsapp,
+        mode_transport: _Modedetransport,
+        duree_estimee_transp: _Dureeestimeedutransport,
+        created_at: DateTime.now().toIso8601String(),
+      );
+
+      switch (response.statusCode) {
+        case 201:
+          if (mounted) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const FormSentSuccess()),
+              (Route<dynamic> route) => false,
+            );
+          }
+          break;
+        case 404:
+        case 401:
+          print(response.data);
+          break;
+        default:
+          print("Unexpected status code: ${response.statusCode}");
+          break;
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+}
+
+  //end
   
   @override
   Widget build(BuildContext context) {
@@ -156,12 +202,18 @@ class _AssuranceTransportState extends State<AssuranceTransport> {
                       ),
                       onPressed: (){
                       if(_formKey.currentState!.validate()){
-                        // ignore: avoid_print
-                        print("submitted");
+                        _formKey.currentState!.save();
+                        _sendtheform();
                       }
               
                     },
-                     child:const Text("submit") ),
+                     child:_isLoading ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3.0,
+                              value: 0.7,) 
+                              : const Text("evoyé la demane",
+                              style: TextStyle(fontFamily: "Roboto-Medium"),
+                              ) ),
                   )
               ],
                     

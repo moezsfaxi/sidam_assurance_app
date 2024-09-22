@@ -29,9 +29,9 @@ class TheGridTest extends StatelessWidget {
         children:const [
          
           CardsTest(imageforthehome: "assets/images/contrat.png",titleforthehome: "votre polices"),
-          CardsTest(imageforthehome: "assets/images/history.png",titleforthehome: "hostoire"),
+          CardsTest(imageforthehome: "assets/images/history.png",titleforthehome: "histoire"),
           CardsTest(imageforthehome: "assets/images/account.png",titleforthehome: "compte"),
-          CardsTest(imageforthehome: "assets/images/createtwo.png",titleforthehome: "nos polices"),
+          CardsTest(imageforthehome: "assets/images/createtwo.png",titleforthehome: "demander "),
           CardsTest(imageforthehome: "assets/images/complaints.png",titleforthehome: "réclamations"),
           CardsTest(imageforthehome: "assets/images/sinister.png",titleforthehome: "déclaration sinistre"),
       

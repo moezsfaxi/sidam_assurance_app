@@ -15,7 +15,7 @@ void showTopSnackBar(BuildContext context, String message) {
         right: 10.0,
         bottom: 20.0
       ),
-      duration: Duration(seconds: 3), // Set the duration to 1 second
+      duration: const Duration(seconds: 3), // Set the duration to 1 second
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

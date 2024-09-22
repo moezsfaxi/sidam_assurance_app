@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sidam_assurance_app/features/app_bar.dart';
+import 'package:dio/dio.dart';
+import 'package:sidam_assurance_app/network_controllers/reclame_controller.dart';
+import 'package:sidam_assurance_app/polices_forms/form_sent_success.dart';
 
 class Reclamation extends StatefulWidget {
   const Reclamation({super.key});
@@ -13,6 +16,48 @@ class _ReclamationState extends State<Reclamation> {
   final _formKey = GlobalKey<FormState>();
   String? _sujet;
   String? _details;
+
+  //begin
+  bool _isLoading = false;
+  Future<void> _sendReclamationForm() async {
+  if (_formKey.currentState!.validate()) {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      Response response = await send_assurance_reclamation(
+        sujet: _sujet,
+        details: _details,
+      );
+
+      switch (response.statusCode) {
+        case 201:
+          if (mounted) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const FormSentSuccess()),
+              (Route<dynamic> route) => false,
+            );
+          }
+          break;
+        case 404:
+        case 401:
+          print(response.data);
+          break;
+        default:
+          print("Unexpected status code: ${response.statusCode}");
+          break;
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+}
+
+  //end
   
   
   @override
@@ -91,12 +136,18 @@ class _ReclamationState extends State<Reclamation> {
                   ),
                   onPressed: (){
                   if(_formKey.currentState!.validate()){
-                    // ignore: avoid_print
-                    print("submitted");
+                   _formKey.currentState!.save();
+                   _sendReclamationForm();
                   }
           
                 },
-                 child:const Text("submit") ),
+                 child:_isLoading ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3.0,
+                              value: 0.7,) 
+                              : const Text("evoyé la demane",
+                              style: TextStyle(fontFamily: "Roboto-Medium"),
+                              ) ),
               )
           
               ],

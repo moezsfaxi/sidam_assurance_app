@@ -16,7 +16,7 @@ Future<Response> sendwithdio({required name, required password}) async {
 
   try {
     response = await dio.post(
-      'http://192.168.43.153:8000/api/users',
+      'http://192.168.1.8:8000/api/users',
       data: {
         "name": name,
         "password": password,
