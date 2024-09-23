@@ -15,11 +15,13 @@ class _FormSentSuccessState extends State<FormSentSuccess> {
     
     super.initState();
     Future.delayed(const Duration(seconds:2 ),(){
-
-       Navigator.of(context).pushAndRemoveUntil(
+        
+       if (mounted) {
+            Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => const TheGridTest()),
               (Route<dynamic> route) => false,
-            ); 
+            );
+          }
 
 
     });
