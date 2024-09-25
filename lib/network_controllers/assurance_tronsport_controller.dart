@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<Response> send_assurance_transport({
   required String? nom_entreprise_transp,
@@ -14,13 +15,14 @@ Future<Response> send_assurance_transport({
   required String created_at,
 }) async {
   final dio = Dio();
+  
   dio.options.headers['Content-Type'] = 'application/json';
-
+  String? api = dotenv.env['private_ip_adress'];
   Response response;
 
   try {
     response = await dio.post(
-      'http://192.168.1.8:8000/api/assurance-transport',
+      '$api/api/assurance-transport',
       data: {
         "nom_entreprise_transp": nom_entreprise_transp,
         "type_transport": type_transport,

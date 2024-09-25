@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 
@@ -11,12 +12,13 @@ Future<Response> sendwithdio({required name, required password}) async {
   print(password);
 
   final dio = Dio();
+  String? api = dotenv.env['private_ip_adress'];
   Response response;
   dio.options.headers['Content-Type'] = 'application/json';
 
   try {
     response = await dio.post(
-      'http://192.168.1.8:8000/api/users',
+      '$api/api/users',
       data: {
         "name": name,
         "password": password,

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<Response> send_assurance_reclamation({
   required String? sujet,
@@ -6,12 +7,13 @@ Future<Response> send_assurance_reclamation({
 }) async {
   final dio = Dio();
   dio.options.headers['Content-Type'] = 'application/json';
+  String? api = dotenv.env['private_ip_adress'];
 
   Response response;
 
   try {
     response = await dio.post(
-      'http://192.168.1.8:8000/api/reclamation-client',
+      '$api/api/reclamation-client',
       data: {
         "sujet": sujet,
         "details": details,

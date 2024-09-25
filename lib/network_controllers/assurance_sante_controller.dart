@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<Response> send_assurance_sante(
   {
     required type_client,
@@ -16,12 +17,13 @@ Future<Response> send_assurance_sante(
     required activ_couvert        }
 ) async {
   final dio = Dio();
+  String? api = dotenv.env['private_ip_adress'];
   Response response;
   dio.options.headers['Content-Type'] = 'application/json';
 
   try {
     response = await dio.post(
-      'http://192.168.1.8:8000/api/assurance-sante',
+      '$api/api/assurance-sante',
       data: {
   
   "type_client": type_client,

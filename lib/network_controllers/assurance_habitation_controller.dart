@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<Response> send_assurance_habitation({
   required String? type_client,
@@ -16,13 +17,14 @@ Future<Response> send_assurance_habitation({
   required String activ_couvert,
 }) async {
   final dio = Dio();
+  String? api = dotenv.env['private_ip_adress'];
   dio.options.headers['Content-Type'] = 'application/json';
 
   Response response;
 
   try {
     response = await dio.post(
-      'http://192.168.1.8:8000/api/assurance-multirisque-habitation',
+      '$api/api/assurance-multirisque-habitation',
       data: {
         "type_client": type_client,
         "adresse": adresse,
