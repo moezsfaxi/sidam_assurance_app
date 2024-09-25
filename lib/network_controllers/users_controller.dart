@@ -13,12 +13,15 @@ Future<Response> sendwithdio({required name, required password}) async {
 
   final dio = Dio();
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/users';
   Response response;
   dio.options.headers['Content-Type'] = 'application/json';
 
   try {
+    //print('$api/api/users');
     response = await dio.post(
-      '$api/api/users',
+      //'http://192.168.43.153:8000/api/users',
+      url,
       data: {
         "name": name,
         "password": password,

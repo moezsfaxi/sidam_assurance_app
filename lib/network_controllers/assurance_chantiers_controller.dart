@@ -21,12 +21,14 @@ Future<Response> send_assurance_tous_risques_chantiers({
   final dio = Dio();
   dio.options.headers['Content-Type'] = 'application/json';
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-tousrisques-chantiers';
 
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-tousrisques-chantiers',
+      //'$api/api/assurance-tousrisques-chantiers',
+      url,
       data: {
         "nom_projet": nom_projet,
         "type_chantier": type_chantier,

@@ -19,13 +19,15 @@ Future<Response> send_assurance_voyage({
 }) async {
   final dio = Dio();
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-voyage';
   dio.options.headers['Content-Type'] = 'application/json';
 
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-voyage',
+      //'$api/api/assurance-voyage',
+      url,
       data: {
         "nom_voyageur": nom_voyageur,
         "email": email,

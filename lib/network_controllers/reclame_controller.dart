@@ -8,12 +8,14 @@ Future<Response> send_assurance_reclamation({
   final dio = Dio();
   dio.options.headers['Content-Type'] = 'application/json';
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/reclamation-client';
 
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/reclamation-client',
+     // '$api/api/reclamation-client',
+     url,
       data: {
         "sujet": sujet,
         "details": details,

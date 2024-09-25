@@ -18,12 +18,14 @@ Future<Response> send_assurance_sante(
 ) async {
   final dio = Dio();
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-sante';
   Response response;
   dio.options.headers['Content-Type'] = 'application/json';
 
   try {
     response = await dio.post(
-      '$api/api/assurance-sante',
+      //'$api/api/assurance-sante',
+      url,
       data: {
   
   "type_client": type_client,

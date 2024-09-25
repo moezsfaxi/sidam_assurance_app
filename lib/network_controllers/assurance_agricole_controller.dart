@@ -23,12 +23,14 @@ Future<Response> send_assurance_agricole({
   final dio = Dio();
   String? api = dotenv.env['private_ip_adress'];
   dio.options.headers['Content-Type'] = 'application/json';
+  String? url ='$api/api/assurance-risque-agricole';
   
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-risque-agricole',
+      //'$api/api/assurance-risque-agricole',
+      url,
       data: {
         "nom_agri": nom_agri,
         "adresse": adresse,

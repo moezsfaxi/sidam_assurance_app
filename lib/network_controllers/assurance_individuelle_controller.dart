@@ -15,11 +15,13 @@ Future<Response> send_assurance_individuelle({
   final dio = Dio();
   dio.options.headers['Content-Type'] = 'application/json';
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-individuelle-accidents';
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-individuelle-accidents',
+      //'$api/api/assurance-individuelle-accidents',
+      url,
       data: {
         "email": email,
         "fonction": fonction,

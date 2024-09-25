@@ -33,13 +33,15 @@ Future<Response> send_assurance_auto(
 
   final dio = Dio();
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-auto';
 
   Response response;
   dio.options.headers['Content-Type'] = 'application/json';
 
   try {
     response = await dio.post(
-      '$api/api/assurance-auto',
+      //'$api/api/assurance-auto',
+      url,
       data: {
   
   "type_client": type_client,

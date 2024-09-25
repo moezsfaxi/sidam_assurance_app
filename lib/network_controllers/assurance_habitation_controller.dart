@@ -18,13 +18,15 @@ Future<Response> send_assurance_habitation({
 }) async {
   final dio = Dio();
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-multirisque-habitation';
   dio.options.headers['Content-Type'] = 'application/json';
 
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-multirisque-habitation',
+      //'$api/api/assurance-multirisque-habitation',
+      url,
       data: {
         "type_client": type_client,
         "adresse": adresse,

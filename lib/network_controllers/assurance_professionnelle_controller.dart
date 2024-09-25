@@ -20,11 +20,13 @@ Future<Response> send_assurance_professionnelle({
   final dio = Dio();
   dio.options.headers['Content-Type'] = 'application/json';
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-multirisque-pro';
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-multirisque-pro',
+      //'$api/api/assurance-multirisque-pro',
+      url,
       data: {
         "nom_entreprise": nom_entreprise,
         "type_activite": type_activite,

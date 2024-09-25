@@ -18,11 +18,13 @@ Future<Response> send_assurance_transport({
   
   dio.options.headers['Content-Type'] = 'application/json';
   String? api = dotenv.env['private_ip_adress'];
+  String? url ='$api/api/assurance-transport';
   Response response;
 
   try {
     response = await dio.post(
-      '$api/api/assurance-transport',
+      //'$api/api/assurance-transport',
+      url,
       data: {
         "nom_entreprise_transp": nom_entreprise_transp,
         "type_transport": type_transport,
