@@ -17,8 +17,8 @@ Future<Response> send_assurance_reclamation({
      // '$api/api/reclamation-client',
      url,
       data: {
-        "sujet": sujet,
-        "details": details,
+        "type_reclamation": sujet,
+        "description_reclamation": details,
       },
     );
     return response;

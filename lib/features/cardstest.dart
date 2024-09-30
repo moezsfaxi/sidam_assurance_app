@@ -26,7 +26,7 @@ class CardsTest extends StatelessWidget {
                   MaterialPageRoute(builder: (context)=> const Polices() ));
 
           
-            case "hostoire" :
+            case "histoire" :
              Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context)=> const HistoireDePaiement() ));
@@ -37,7 +37,7 @@ class CardsTest extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context)=> const InformationsPersonnelles() )); 
 
-            case "nos polices" :
+            case "demander" :
              Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context)=> const CreationDePolice() ));
