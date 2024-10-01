@@ -12,9 +12,9 @@ Future<List<AssuranceRecord>> requestwithdio({required email}) async{
   print(url);
  Response response;
  try{
- SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? email = prefs.getString('user_email');
-  print('User email: $email'); 
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? prefemail = prefs.getString('user_email');
+  print('User email: $prefemail'); 
 
  response = await dio.get(url);
  List<dynamic> responseData = response.data;

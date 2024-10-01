@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sidam_assurance_app/features/app_bar.dart';
-import 'package:sidam_assurance_app/features/polices_card.dart';
+//import 'package:sidam_assurance_app/features/polices_card.dart';
 
 class Polices extends StatelessWidget {
   const Polices({super.key});
@@ -13,7 +13,7 @@ class Polices extends StatelessWidget {
       body: ListView(
        
         padding:const EdgeInsets.all(8.0),
-       children:[
+       children:const [
         // const  PolicesCard(),
         // SizedBox(height: MediaQuery.of(context).size.width*0.05),
         // const  PolicesCard(),

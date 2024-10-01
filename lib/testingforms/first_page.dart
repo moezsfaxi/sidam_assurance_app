@@ -9,7 +9,6 @@ import 'package:sidam_assurance_app/network_controllers/users_controller.dart';
 import 'package:sidam_assurance_app/pages/the_grid_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
   @override
@@ -33,7 +32,7 @@ class _FirstPageState extends State<FirstPage> {
       String password = _password ?? "password";
 
       try {
-        Response response = await sendwithdio(name:email, password: password);
+        Response response = await sendwithdio(email: email , password: password);
        
         switch (response.statusCode) {
       case 200:
@@ -51,6 +50,7 @@ class _FirstPageState extends State<FirstPage> {
             // Navigator.pushReplacement(
             // context,
             // MaterialPageRoute(builder: (context)=> const TheGridTest()));
+            
              Navigator.of(context).pushAndRemoveUntil(
     MaterialPageRoute(builder: (context) => const TheGridTest()),
     (Route<dynamic> route) => false, // This removes all previous routes

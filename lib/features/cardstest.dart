@@ -5,7 +5,7 @@ import 'package:sidam_assurance_app/pages/creation_de_police.dart';
 //import 'package:sidam_assurance_app/pages/histoire.dart';
 import 'package:sidam_assurance_app/pages/histoire_de_paiement.dart';
 import 'package:sidam_assurance_app/pages/informations_personnelles.dart';
-import 'package:sidam_assurance_app/pages/polices.dart';
+//import 'package:sidam_assurance_app/pages/polices.dart';
 import 'package:sidam_assurance_app/pages/reclamation.dart';
 import 'package:sidam_assurance_app/polices_forms/assurance_automobile.dart';
 

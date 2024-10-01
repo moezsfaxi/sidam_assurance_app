@@ -6,13 +6,9 @@ class Numberfields extends StatelessWidget {
   required this.myfunction,
   required this.onSaved,
   super.key});
-  
   final String hint;
   final String? Function(String?) myfunction;
   final Function(String) onSaved;
-  
-
-
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -32,8 +28,6 @@ class Numberfields extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.grey,
         fontFamily: "Roboto-Thin"  
         )
-        
-      
         ),
          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
          keyboardType: TextInputType.number,
@@ -43,8 +37,6 @@ class Numberfields extends StatelessWidget {
             onSaved(value);
           }},
          validator:myfunction , 
-      
-      
       ),
     )  ;
   }

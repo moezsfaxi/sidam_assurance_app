@@ -7,8 +7,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 
-Future<Response> sendwithdio({required name, required password}) async {
-  print(name);
+Future<Response> sendwithdio({required email, required password}) async {
+  print(email);
   print(password);
 
   final dio = Dio();
@@ -23,7 +23,7 @@ Future<Response> sendwithdio({required name, required password}) async {
       //'http://192.168.43.153:8000/api/users',
       url,
       data: {
-        "name": name,
+        "mail": email,
         "password": password,
       },
     );

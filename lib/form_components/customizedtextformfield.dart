@@ -9,9 +9,6 @@ class Customizedtextformfield extends StatelessWidget {
   final String hint;
   final String? Function(String?) myfunction;
   final Function(String) onSaved;
-  
-
-
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -19,10 +16,8 @@ class Customizedtextformfield extends StatelessWidget {
       child: TextFormField(
          //decoration:InputDecoration(
          // hintText: hint,
-         //),
-      
-        decoration: InputDecoration(
-      
+         //),      
+        decoration: InputDecoration(     
         enabledBorder:const OutlineInputBorder(
         borderSide:BorderSide(color: Color.fromARGB(255, 32, 55, 185), width: 2.0)),
         border: const OutlineInputBorder(borderSide: BorderSide()),
@@ -31,21 +26,14 @@ class Customizedtextformfield extends StatelessWidget {
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.grey,
         fontFamily: "Roboto-Thin"  
-        
-        )
-        
+        )   
         ),
         onSaved: (value){
           if(value!=null){
-            onSaved(value);
+          onSaved(value);
           }
-      
         },
-      
-         
          validator:myfunction , 
-      
-      
       ),
     )  ;
   }
