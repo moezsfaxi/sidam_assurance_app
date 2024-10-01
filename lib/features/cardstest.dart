@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sidam_assurance_app/les_polices_active.dart';
 import 'package:sidam_assurance_app/pages/creation_de_police.dart';
 //import 'package:sidam_assurance_app/pages/declaration_sinistre.dart';
 //import 'package:sidam_assurance_app/pages/histoire.dart';
@@ -23,7 +24,7 @@ class CardsTest extends StatelessWidget {
             case "votre polices" :
              Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=> const Polices() ));
+                  MaterialPageRoute(builder: (context)=> const ActivePolices(useremail: 'test@gmail.com') ));
 
           
             case "histoire" :

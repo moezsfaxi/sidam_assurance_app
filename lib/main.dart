@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:sidam_assurance_app/polices_forms/assurance_agricole.dart';
-import 'package:sidam_assurance_app/polices_forms/assurance_sante.dart';
+import 'package:sidam_assurance_app/les_polices_active.dart';
 import 'package:sidam_assurance_app/testingforms/first_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -9,6 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future  main() async {
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
+  //runApp(const Testing());
 }
 
 class MyApp extends StatelessWidget {
@@ -52,15 +52,7 @@ class Testing extends StatelessWidget {
       ),
       home: const Scaffold(
         //appBar: AppBarwidget(isHome: true),
-        body: AssuranceSante()  ,
+        body: ActivePolices(useremail:"test@gmail.com")  ,
     ));
   }
 }
-
-
-
-
-
-
-
-

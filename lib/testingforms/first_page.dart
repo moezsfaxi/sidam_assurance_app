@@ -1,6 +1,4 @@
-
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:sidam_assurance_app/features/snackbar.dart';
@@ -9,16 +7,14 @@ import 'package:sidam_assurance_app/form_components/login_password.dart';
 import 'package:sidam_assurance_app/form_components/login_text.dart';
 import 'package:sidam_assurance_app/network_controllers/users_controller.dart';
 import 'package:sidam_assurance_app/pages/the_grid_test.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
-
   @override
   State<FirstPage> createState() => _FirstPageState();
 }
-
 class _FirstPageState extends State<FirstPage> {
 
   final _formKey = GlobalKey<FormState>();
@@ -45,14 +41,12 @@ class _FirstPageState extends State<FirstPage> {
          if(response.data["message"]== "User doesn't exist"){
           showTopSnackBar(context,"User doesn't exist");
 
-
-
          } else if(response.data["message"]== "The password is wrong"){
           showTopSnackBar(context,"The password is wrong");
 
-
-
          } else if(response.data["message"]== "Login success"){
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setString('user_email', email);
 
             // Navigator.pushReplacement(
             // context,
@@ -63,9 +57,6 @@ class _FirstPageState extends State<FirstPage> {
   );
 
          }    
-
-
-
         }
         break;
       case 404:
@@ -92,22 +83,14 @@ class _FirstPageState extends State<FirstPage> {
     }
   }
 //end 
-  
-  
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? myvalidation(String? value){
                if(value!.isEmpty){
-                return "please enter some text";
-      
+                return "please enter some text"; 
                } 
-
                return null;
             }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,17 +132,10 @@ class _FirstPageState extends State<FirstPage> {
                   }),
                   SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton( onPressed: ()  {
-                              
+                            child: ElevatedButton( onPressed: ()  {       
                               
                                   _formKey.currentState!.save();
                                   _login();
-                                  
-
-                                 
-                                
-                              
-
 
                             },
                             style: ElevatedButton.styleFrom(

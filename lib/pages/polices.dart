@@ -14,18 +14,18 @@ class Polices extends StatelessWidget {
        
         padding:const EdgeInsets.all(8.0),
        children:[
-        const  PolicesCard(),
-        SizedBox(height: MediaQuery.of(context).size.width*0.05),
-        const  PolicesCard(),
-        SizedBox(height: MediaQuery.of(context).size.width*0.05),
-        const  PolicesCard(),
-        SizedBox(height: MediaQuery.of(context).size.width*0.05),
-        const  PolicesCard(),
-        SizedBox(height: MediaQuery.of(context).size.width*0.05),
-        const  PolicesCard(),
-        SizedBox(height: MediaQuery.of(context).size.width*0.05),
-        const  PolicesCard(),
-        SizedBox(height: MediaQuery.of(context).size.width*0.05),
+        // const  PolicesCard(),
+        // SizedBox(height: MediaQuery.of(context).size.width*0.05),
+        // const  PolicesCard(),
+        // SizedBox(height: MediaQuery.of(context).size.width*0.05),
+        // const  PolicesCard(),
+        // SizedBox(height: MediaQuery.of(context).size.width*0.05),
+        // const  PolicesCard(),
+        // SizedBox(height: MediaQuery.of(context).size.width*0.05),
+        // const  PolicesCard(),
+        // SizedBox(height: MediaQuery.of(context).size.width*0.05),
+        // const  PolicesCard(),
+        // SizedBox(height: MediaQuery.of(context).size.width*0.05),
 
 
 

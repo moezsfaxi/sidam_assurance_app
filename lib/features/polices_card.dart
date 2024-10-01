@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PolicesCard extends StatelessWidget {
-  const PolicesCard({super.key});
+  final String type_assurance ;
+  final String montant_total ;
+  final String paiement ;
+  const PolicesCard({super.key,
+                    required this.type_assurance,
+                    required this.montant_total,
+                    required this.paiement});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +25,11 @@ class PolicesCard extends StatelessWidget {
           ),
           child:  Column(
             children: [
-              const Row(
+               Row(
               children: [
-                Icon(Icons.book, color: Colors.blue),
-                 Text("Assurance Professionnelle",
-                 style: TextStyle(color: Colors.blue ,
+                const Icon(Icons.book, color: Colors.blue),
+                 Text(type_assurance.toUpperCase(),
+                 style:const TextStyle(color: Colors.blue ,
                  fontFamily: "Roboto-Bolod"
                  ),
                  
@@ -39,7 +45,7 @@ class PolicesCard extends StatelessWidget {
                        const Text("Montant:",style: TextStyle(color: Colors.black,
                  fontFamily: "Roboto-Bolod")), 
                        SizedBox(width: MediaQuery.of(context).size.width*0.02),
-                       const Text("3000EUR",style: TextStyle(color: Colors.blue,
+                        Text(montant_total.toUpperCase(),style: const TextStyle(color: Colors.blue,
                  fontFamily: "Roboto-Bolod")),   
 
                       ],
@@ -50,13 +56,11 @@ class PolicesCard extends StatelessWidget {
                        const Text("échiance:",style: TextStyle(color: Colors.black,
                  fontFamily: "Roboto-Bolod")), 
                        SizedBox(width: MediaQuery.of(context).size.width*0.02),
-                       const Text("250EUR",style: TextStyle(color: Colors.blue,
+                        Text(paiement.toUpperCase(),style:const TextStyle(color: Colors.blue,
                  fontFamily: "Roboto-Bolod")),   
 
                       ],
-                    ),
-                   
-                    
+                    ),                   
                   
                     SizedBox(height: MediaQuery.of(context).size.width*0.05)
                     
