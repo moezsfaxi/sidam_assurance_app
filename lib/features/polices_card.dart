@@ -86,23 +86,9 @@ class PolicesCard extends StatelessWidget {
                  fontFamily: "Roboto-Bolod")),) ,
                                    ),
                  )
-                
-
-
-
             ],
           ),
-
-
-
-
       );
-
-
-
-
-
-
     });
   }
 }

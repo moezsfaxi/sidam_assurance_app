@@ -3,6 +3,7 @@ class AssuranceRecord {
   final String? paiement;
   final String? montantTotal;
   final String? type_assurance;
+  
  
 
   const AssuranceRecord({
