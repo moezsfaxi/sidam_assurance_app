@@ -3,6 +3,7 @@ import 'package:sidam_assurance_app/features/app_bar.dart';
 import 'package:sidam_assurance_app/features/polices_card.dart';
 import 'package:sidam_assurance_app/network_controllers/my_assurances_controller.dart';
 import 'package:sidam_assurance_app/selectiveDTOS/my_polices_record.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActivePolices extends StatefulWidget {
   final String useremail;
@@ -24,15 +25,18 @@ List<AssuranceRecord> assurances = [];
   Future<void> _fetchAssuranceData() async {
     try {
       // Call your requestwithdio function or the Dio logic directly here
-      final fetchedAssurances = await requestwithdio(email: widget.useremail);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String emailfromstorage = prefs.getString('user_email') ?? 'default@example.com';
+      
+      final fetchedAssurances = await requestwithdio(email: emailfromstorage);
       setState(() {
         assurances = fetchedAssurances;
-        _isLoading = false; // Stop showing loading indicator when data is fetched
+        _isLoading = false; 
       });
     } catch (error) {
       print('Error fetching data: $error');
       setState(() {
-        _isLoading = false; // Stop showing loading indicator in case of error
+        _isLoading = false; 
       });
     }
   }
@@ -48,7 +52,7 @@ List<AssuranceRecord> assurances = [];
         padding:const EdgeInsets.all(8.0),
        child:
        _isLoading
-          ?const Center(child: CircularProgressIndicator()) // Show loading indicator while fetching data
+          ?const Center(child: CircularProgressIndicator()) 
           : ListView.builder(
               itemCount: assurances.length,
               itemBuilder: (context, index) {
@@ -57,7 +61,12 @@ List<AssuranceRecord> assurances = [];
                   children: [
                     PolicesCard(type_assurance: assurance.type_assurance ?? "not found",
                      montant_total: assurance.montantTotal ?? "not found",
-                     paiement: assurance.paiement ?? "not found"),
+                     paiement: assurance.paiement ?? "not found",
+                     date_debut_couvert: assurance.date_debut_couvert ?? "not found",
+                     date_fin_couvert: assurance.date_fin_couvert ?? "not found",
+                     id: assurance.id ?? 120,
+
+                     ),
                      SizedBox(height: MediaQuery.of(context).size.width*0.05)
 
                   ],

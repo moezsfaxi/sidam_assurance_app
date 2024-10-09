@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sidam_assurance_app/changevalue/changedate.dart';
 
 class PolicesCard extends StatelessWidget {
   final String type_assurance ;
   final String montant_total ;
   final String paiement ;
+  final int id;
+   final String date_debut_couvert;
+  final String date_fin_couvert;
   const PolicesCard({super.key,
+                     required this.id, 
+                     required this.date_debut_couvert,
+                     required this.date_fin_couvert, 
                     required this.type_assurance,
                     required this.montant_total,
                     required this.paiement});
@@ -79,8 +86,9 @@ class PolicesCard extends StatelessWidget {
                                  
                                    ),
                       onPressed: (){
-                        // ignore: avoid_print
-                        print("renouveler");
+                      Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context)=> Changedate(theid: id, typeofanssurance: type_assurance)));
                     },
                      child: const Text("Rrenouveler",style: TextStyle(color: Colors.white,
                  fontFamily: "Roboto-Bolod")),) ,
